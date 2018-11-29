@@ -1,0 +1,62 @@
+﻿<Window x:Class="TestEntityFramework.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestEntityFramework.ViewModel"
+        mc:Ignorable="d"
+        Title="Test Entity Framework" 
+        Height="450" 
+        Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="129*"/>
+            <RowDefinition Height="11*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="779*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding Students, Mode=TwoWay}" SelectedItem="{Binding DataGridSelectedStudent, Mode=TwoWay}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Margin="2.8,10,0.4,1.285" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Width="100" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="100" Header="Surname" Binding="{Binding Surname}"/>
+                <DataGridTemplateColumn Header="Date of Birth" Width="125">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker Text="{Binding DateBirth, StringFormat='dd MMM yyyy'}" DisplayDate="{Binding DateBirth}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="35" Header="Age" Binding="{Binding Age}"/>
+                <DataGridTextColumn Width="100" Header="College" Binding="{Binding College}"/>
+                <DataGridTextColumn Width="50" Header="Group" Binding="{Binding Group}"/>
+                <DataGridTemplateColumn Header="Photo" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="ShowPhoto">
+                                <Button.ToolTip>
+                                    <ToolTip Width="150" Background="#90004455">
+                                        <StackPanel>
+                                            <Image Source="{Binding Photo, Converter={StaticResource ImageConverter}}"/>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete Student" Command="{Binding DeleteStudentCommand}"/>
+                    <MenuItem Header="Upload Photo" Command="{Binding UploadPhotoCommand}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Button Content="Add new student" Command="{Binding OpenAddNewStudentWindowCommand}" HorizontalAlignment="Left" Margin="2.8,3.715,0,0" VerticalAlignment="Top" Width="108" Grid.Column="1" Grid.Row="1"/>
+        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="134.8,3.715,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.Row="1"/>
+    </Grid>
+</Window>
